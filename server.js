@@ -1,14 +1,10 @@
 const express = require('express');
 
-//const projectRouter = require('./schemes/scheme-router.js');
+const projectRouter = require('./projects/project-router.js');
 
 const server = express();
 
 server.use(express.json());
-//server.use('/api/projects', projectRouter);
-
-server.get("/", (req, res) => {
-    res.status(200).json({ api: "server up and running" })
-})
+server.use('/api/projects', projectRouter);
 
 module.exports = server;
