@@ -46,24 +46,40 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/resources', (req, res) => {
+router.post('/:id/resource', (req, res) => {
     const resourceData = req.body;
+    const { id } = req.params; 
   
-    Projects.add(resourceData)
+    Projects.findById(id)
     .then(resource => {
-      res.status(201).json(resource);
+      if (resource) {
+        Projects.addResource(resourceData, id)
+        .then(resource => {
+          res.status(201).json(resource);
+        })
+      } else {
+        res.status(404).json({ message: 'Could not find project with given id.' })
+      }
     })
     .catch (err => {
       res.status(500).json({ message: 'Failed to create new resource' });
     });
   });
 
-  router.post('/tasks', (req, res) => {
+  router.post('/:id/task', (req, res) => {
     const taskData = req.body;
+    const { id } = req.params; 
   
-    Projects.add(taskData)
+    Projects.findById(id)
     .then(task => {
-      res.status(201).json(task);
+      if (task) {
+        Projects.addTask(taskData, id)
+        .then(task => {
+          res.status(201).json(task);
+        })
+      } else {
+        res.status(404).json({ message: 'Could not find task with given id.' })
+      }
     })
     .catch (err => {
       res.status(500).json({ message: 'Failed to create new task' });

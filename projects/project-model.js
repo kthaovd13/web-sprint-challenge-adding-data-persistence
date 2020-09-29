@@ -4,6 +4,11 @@ function find() {
     return db('projects');
 }
 
+function findById(id) {
+    return db('projects').where({ id }).first();
+}
+
+
 function find() {
     return db('resource');
 }
@@ -29,6 +34,7 @@ function add(task) {
 
 module.exports = {
     find,
-    add,
+    findById,
+    add
 }
 
