@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/resources', (req, res) => {
-    Projects.find()
+    Projects.findResources()
     .then(resource => {
       res.json(resource);
     })
@@ -25,7 +25,7 @@ router.get('/resources', (req, res) => {
   });
 
   router.get('/tasks', (req, res) => {
-    Projects.find()
+    Projects.findTasks()
     .then(task => {
       res.json(task);
     })
@@ -46,44 +46,28 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/:id/resource', (req, res) => {
-    const resourceData = req.body;
-    const { id } = req.params; 
+router.post('/resources', (req, res) => {
+   const resourceData = req.body;
   
-    Projects.findById(id)
+   Projects.add(resourceData)
     .then(resource => {
-      if (resource) {
-        Projects.addResource(resourceData, id)
-        .then(resource => {
-          res.status(201).json(resource);
-        })
-      } else {
-        res.status(404).json({ message: 'Could not find project with given id.' })
-      }
+      res.status(201).json(resource);
     })
     .catch (err => {
       res.status(500).json({ message: 'Failed to create new resource' });
     });
-  });
+});
 
-  router.post('/:id/task', (req, res) => {
+  router.post('/tasks', (req, res) => {
     const taskData = req.body;
-    const { id } = req.params; 
   
-    Projects.findById(id)
+    Projects.add(taskData)
     .then(task => {
-      if (task) {
-        Projects.addTask(taskData, id)
-        .then(task => {
-          res.status(201).json(task);
-        })
-      } else {
-        res.status(404).json({ message: 'Could not find task with given id.' })
-      }
-    })
+      res.status(201).json(task);
+      })
     .catch (err => {
       res.status(500).json({ message: 'Failed to create new task' });
     });
-  });
+});
 
 module.exports = router;

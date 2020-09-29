@@ -8,13 +8,12 @@ function findById(id) {
     return db('projects').where({ id }).first();
 }
 
-
-function find() {
-    return db('resource');
+function findResources() {
+    return db('resource')
 }
 
-function find() {
-    return db('task');
+function findTasks() {
+    return db('task')
 }
 
 function add(project) {
@@ -29,12 +28,15 @@ function add(resource) {
 
 function add(task) {
     return db('task')
-        .insert(task, 'id');
+        .insert(task, 'id')
+        .join('projects as p', 'p.name', 'p.description');
 }
 
 module.exports = {
     find,
     findById,
+    findResources,
+    findTasks,
     add
 }
 
