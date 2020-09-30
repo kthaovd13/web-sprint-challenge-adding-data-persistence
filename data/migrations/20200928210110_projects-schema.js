@@ -5,12 +5,6 @@ exports.up = function(knex) {
       tbl.increments('id');
       tbl.string('name', 128)
           .notNullable();
-      tbl.integer('task_id')
-          .unsigned()
-          .notNullable()
-          .references('task.id')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE');
       tbl.text('description', 128);
       tbl.boolean('completed')
           .notNullable()

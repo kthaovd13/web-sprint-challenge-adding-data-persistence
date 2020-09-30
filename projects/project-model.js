@@ -1,5 +1,15 @@
 const db = require('../data/db-config');
 
+module.exports = {
+    find,
+    findById,
+    findResources,
+    findTasks,
+    addProject,
+    addResource,
+    addTask
+}
+
 function find() {
     return db('projects');
 }
@@ -16,27 +26,19 @@ function findTasks() {
     return db('task')
 }
 
-function add(project) {
+function addProject(project) {
     return db('projects')
         .insert(project, 'id');
 }
 
-function add(resource) {
+function addResource(resource) {
     return db('resource')
         .insert(resource, 'id');
 }
 
-function add(task) {
+function addTask(task) {
     return db('task')
-        .insert(task, 'id')
+        .insert(task)
         .join('projects as p', 'p.name', 'p.description');
-}
-
-module.exports = {
-    find,
-    findById,
-    findResources,
-    findTasks,
-    add
 }
 

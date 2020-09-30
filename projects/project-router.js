@@ -37,19 +37,19 @@ router.get('/resources', (req, res) => {
 router.post('/', (req, res) => {
   const projectData = req.body;
 
-  Projects.add(projectData)
+  Projects.addProject(projectData)
   .then(project => {
     res.status(201).json(project);
   })
   .catch (err => {
-    res.status(500).json({ message: 'Failed to create new project' });
+    res.status(500).json({ message: `${err}Failed to create new project` });
   });
 });
 
 router.post('/resources', (req, res) => {
    const resourceData = req.body;
   
-   Projects.add(resourceData)
+   Projects.addResource(resourceData)
     .then(resource => {
       res.status(201).json(resource);
     })
@@ -61,7 +61,7 @@ router.post('/resources', (req, res) => {
   router.post('/tasks', (req, res) => {
     const taskData = req.body;
   
-    Projects.add(taskData)
+    Projects.addTask(taskData)
     .then(task => {
       res.status(201).json(task);
       })
